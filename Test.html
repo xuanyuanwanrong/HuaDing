@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/jquery-3.4.1.slim.js"></script>
+
+		<style type="text/css">
+			input[type="button"] {
+				height: 50px;
+				width: 50px;
+				background-color: aqua;
+				border-radius: 50%;
+			}
+		</style>
+	</head>
+	<body>
+		点击空白处确认，默认玩家一先开始
+		<div id="Test">
+			<div id="one">
+				<input type="button" value="01" />
+				<input type="button" value="02" />
+				<input type="button" value="03" />
+			</div>
+			<div id="two">
+				<input type="button" value="04" />
+				<input type="button" value="05" />
+				<input type="button" value="06" />
+				<input type="button" value="07" />
+				<input type="button" value="08" />
+
+			</div>
+			<div id="three">
+				<input type="button" value="09" />
+				<input type="button" value="10" />
+				<input type="button" value="11" />
+				<input type="button" value="12" />
+				<input type="button" value="13" />
+				<input type="button" value="14" />
+				<input type="button" value="15" />
+			</div>
+
+		</div>
+		
+	</body>
+	<script type="text/javascript">
+		//确认次数
+		let shu = 0;
+		let line = "";
+		//被点击
+		$("input[type='button']").click(function() {
+			//将所有禁用
+			$("input[type='button']").attr('disabled', true);
+			line = $(this).parent().attr('id');
+			//启用该行内所有
+			$("#" + line + ">input").attr('disabled', false);
+			$(this).hide()
+			$(this).attr("display", "none")
+			
+		})
+		//点击空白处确认
+		$(document).bind("click", function(e) {
+			var target = $(e.target);
+			
+			if (target.closest("#" + line + ">input").length == 0) { 
+				//恢复所有禁用
+				$("input[type='button']").attr('disabled', false);
+				//判断确认次数 并判断出赢家
+				if($("input[display=none]").length>=14){
+						if(shu%2==0){
+							alert("玩家一胜利");
+						}else{
+							alert("玩家二胜利");
+						}
+				}
+				//确认次数+1
+				shu++;
+			}
+			
+		})
+	</script>
+</html>
